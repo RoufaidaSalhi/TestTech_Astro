@@ -1,0 +1,11 @@
+POST http://localhost:4000/app/AddProduct
+Content-Type:application/json
+
+{
+    "title":"prod11",
+    "name":"prod11",
+    "description":"prod1",
+    "price":1235,
+    "curency":"EURO",
+    "status":"bought"
+}

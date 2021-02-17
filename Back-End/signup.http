@@ -1,0 +1,8 @@
+POST http://localhost:4000/app/signup
+Content-Type:application/json
+
+{
+        "email":"salhiroufaida@yahoo.fr",
+        "password":"123456789",
+        "ConfPassword":"123456789"
+}

@@ -1,0 +1,6 @@
+POST http://localhost:4000/app/AddWish
+Content-Type:application/json
+
+{
+        "name":"wishlist19"
+}
