@@ -147,9 +147,9 @@ render(){
 
               <CNavbar light color="light" className="shadow-sm">
                 <CNav  variant="tabs" >
-                <CNavLink >To Buy</CNavLink>
-                <CNavLink  >Bought</CNavLink>
-                </CNav>
+                <CNavLink onChange={this.setActivewishlist}>To Buy</CNavLink>
+                <CNavLink  onChange={this.ListProductBought}>Brought</CNavLink>
+               </CNav>
                 <div className="card-header-actions">
                 <CButton color="light" className="my-2 my-sm-0" > <CIcon name="cil-grid"></CIcon>&nbsp;Grid</CButton>
                 <CButton color="light" className="my-2 my-sm-0" > <CIcon name="cil-list"></CIcon>&nbsp;List</CButton>
