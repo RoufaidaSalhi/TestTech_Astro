@@ -21,7 +21,19 @@ class Modal extends Component {
      
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.refreshList = this.refreshList.bind(this);
   }
+  refreshList() {
+    wishlistsService.GetWishlist()
+    .then(response => {
+      this.setState({
+        ListData: response.data
+      });
+      console.log(JSON.stringify(response.data))
+    })
+    .catch(e => {
+      console.log(e);
+    });  }
      
   handleChange(event) {
     let input = this.state.input;
@@ -31,6 +43,7 @@ class Modal extends Component {
       input
     });
   }
+  
   handleSubmit(event) {
     event.preventDefault();
   
@@ -47,11 +60,14 @@ class Modal extends Component {
           let input = {};
           input["name"] = "";
           this.setState({input:input});
-
-          alert('Post created successfully.');
   
+            alert('Post created successfully.');
+
+          
+        
         })
-   
+        this.refreshList();
+
     }
   }
   validate(){
@@ -86,7 +102,7 @@ class Modal extends Component {
               <CModalBody>
               <CFormGroup >
                 <CLabel htmlFor="inputIsValid">Name</CLabel><br/>
-                 <input className="text-center mr-auto ml-auto" id="inputIsValid" name="name" 
+                 <input className="text-center form-control" id="inputIsValid" name="name" 
                  value={this.state.input.name}
                  onChange={this.handleChange}/>
               

@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
 import './add_product.css'
 import { CCard, CCardBody, CCardHeader, CCol } from '@coreui/react';
+import ProductsService from '../../services/Products.service';
 
 class AddProduct extends Component{
 
@@ -64,7 +65,7 @@ class AddProduct extends Component{
           status:this.state.status,
           currency:this.state.currency
         }
-        axios.post('http://localhost:4000/app/AddProduct',Add)
+      ProductsService.AddProduct(Add)
             .then(response=>console.log(response.data))
         this.setState({
             name:'',

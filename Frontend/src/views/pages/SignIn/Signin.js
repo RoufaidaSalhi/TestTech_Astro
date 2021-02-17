@@ -3,8 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css"
 import axios from 'axios'
 import logo from '../../../assets/img/logo.png'
 import './Signin.css';
-
-
+import AuthService from '../../../services/auth.service'
 
 class SignIN extends Component{
   

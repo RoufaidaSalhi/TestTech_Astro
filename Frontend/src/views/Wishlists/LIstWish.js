@@ -4,7 +4,6 @@ import axios from 'axios'
 import CIcon from '@coreui/icons-react'
 import './List.css';
 import {
- 
     CButton,
     CCard,
     CCardBody,
@@ -27,16 +26,16 @@ const getBadge = status => {
     case 'bought': return 'secondary'
   }
 }
-const fields = ['Image','Title', 'Description', 'status','Price']
+const fields = ['Image', 'name', 'Description', 'status', 'Price']
 class ListWish extends Component{
   constructor(props) {
     super(props);
     this.retrievewishlists = this.retrievewishlists.bind(this);
     this.setActivewishlist = this.setActivewishlist.bind(this);
     this.refreshList = this.refreshList.bind(this);
+    this.ListProductBought=this.ListProductBought.bind(this)
     this.state = { show : false,
-      WishProductsTObuy:{},
-      WishProductsBought:{},
+      WishProducts:{},
       ListData: {},
       currentwishlist:null,
       currentIndex:0,
@@ -69,18 +68,23 @@ retrievewishlists() {
       console.log(e);
     });
 }
-refreshList() {
-  this.retrievewishlists();
-  this.setState({
-    currentwishlist: null,
-    currentIndex: 0
+ListProductBought(){
+  wishlistsService.GetProductWishBought(this.state.currentwishlist)
+  .then(response => {
+    this.setState({
+      WishProducts: response.data
+    });
+    console.log(JSON.stringify(response.data))
+  })
+  .catch(e => {
+    console.log(e);
   });
 }
 setActivewishlist(wish, index) {
   wishlistsService.GetProductWishTObuy(wish)
   .then(response => {
     this.setState({
-      WishProductsTObuy: response.data
+      WishProducts: response.data
     });
     console.log(JSON.stringify(response.data))
   })
@@ -90,7 +94,7 @@ setActivewishlist(wish, index) {
   wishlistsService.GetProductWishBought(wish)
   .then(response => {
     this.setState({
-      WishProductsBought: response.data
+      WishProducts: response.data
     });
     console.log(JSON.stringify(response.data))
   })
@@ -103,7 +107,7 @@ setActivewishlist(wish, index) {
   });
 }
 render(){
-    const {ListData , WishProductsTObuy, WishProductsBought,currentIndex ,currentwishlist} = this.state;
+    const {ListData , WishProducts,currentIndex ,currentwishlist} = this.state;
 
         return(
             <>
@@ -143,8 +147,8 @@ render(){
 
               <CNavbar light color="light" className="shadow-sm">
                 <CNav  variant="tabs" >
-                <CNavLink active>To Buy</CNavLink>
-                <CNavLink >Brought</CNavLink>
+                <CNavLink >To Buy</CNavLink>
+                <CNavLink  >Bought</CNavLink>
                 </CNav>
                 <div className="card-header-actions">
                 <CButton color="light" className="my-2 my-sm-0" > <CIcon name="cil-grid"></CIcon>&nbsp;Grid</CButton>
@@ -163,21 +167,38 @@ render(){
 
                   <CRow className="mt-5">
                     <CCol>
-              <CDataTable items={''}
+                    <table className="table table-lg responsive striped bordered hover"  >
+  <thead>
+    <tr>
+      <th>Image</th>
+      <th>name</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+  <tbody>
+  { Object.keys(WishProducts).map((item,index)=>(
+    <tr>
+      <td></td>
+      <td>{WishProducts[item].name}</td>
+      <td>{WishProducts[item].description}</td>
+      <td>  <CBadge color={getBadge(WishProducts[item].status)}>
+                        {WishProducts[item].status}
+                      </CBadge></td>
+      <td>{WishProducts[item].price}</td>
+
+    </tr>
+ ))}
+  </tbody>
+</table>
+               {/* <CDataTable items={''}
               fields={fields}
               size="lg"
               itemsPerPage={5}
               pagination
               scopedSlots = {{
-                'title':
-                (item)=>(
-                  <td>{WishProductsTObuy[item].title} </td>
-                ),
-                'description':
-                (item)=>(
-                  <td>{WishProductsTObuy[item].description} </td>
-                )
-                ,
+                
                 'status':
                   (item)=>(
                     <td>
@@ -185,15 +206,10 @@ render(){
                         {WishProductsTObuy[item].status}
                       </CBadge>
                     </td>),
-                    'price':
-                    (item)=>(
-                      <td>{WishProductsTObuy[item].price} </td>
-                    )
-                  
 
               }}
               
-            ></CDataTable>
+            ></CDataTable>  */}
                     </CCol>
                  
                   </CRow>
