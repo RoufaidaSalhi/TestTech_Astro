@@ -50,10 +50,15 @@ class SignUP extends Component{
         axios.post('http://localhost:4000/app/signup',registred)
             .then(response=>{
               if (response.status==200){
+                this.props.history.push('/listwish')
                 this.setState({message: response})
+                alert('welcome to wishlist app')
               }
               else{
+                this.props.history.push('/SignUP')
+
                 this.setState({message: response})
+                alert('echec')
               }
             }
             )
